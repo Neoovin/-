@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сканування профілю</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#050816;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    overflow:hidden;
+}
+
+.container{
+    margin-top:80px;
+}
+
+h1{
+    font-size:50px;
+    text-shadow:0 0 20px #00bfff;
+}
+
+#status{
+    font-size:25px;
+    margin-top:30px;
+}
+
+#bar{
+    width:80%;
+    max-width:700px;
+    height:35px;
+    background:#1e293b;
+    margin:30px auto;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+#progress{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#00bfff,#00ff88);
+    transition:0.2s;
+}
+
+.card{
+    display:none;
+    background:#111827;
+    width:90%;
+    max-width:700px;
+    margin:30px auto;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(0,191,255,.4);
+}
+
+.result{
+    font-size:24px;
+    margin:12px;
+}
+
+button{
+    padding:15px 30px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    margin-top:20px;
+}
+
+.restart{
+    background:#2563eb;
+    color:white;
+}
+
+.secret{
+    background:#16a34a;
+    color:white;
+}
+
+#secretPage{
+    display:none;
+}
+
+.big{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="mainPage">
+
+<div class="container">
+
+<h1>🔎 Система аналізу користувача</h1>
+
+<div id="status">
+Підготовка до перевірки...
+</div>
+
+<div id="bar">
+<div id="progress"></div>
+</div>
+
+<div id="resultCard" class="card">
+
+<h2>Результат перевірки</h2>
+
+<div class="result" id="r1"></div>
+<div class="result" id="r2"></div>
+<div class="result" id="r3"></div>
+<div class="result" id="r4"></div>
+<div class="result" id="r5"></div>
+
+<button class="secret" onclick="showSecret()">
+Відкрити секретний звіт
+</button>
+
+<br>
+
+<button class="restart" onclick="location.reload()">
+Перевірити ще раз
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="secretPage">
+
+<div class="container">
+
+<div class="big">
+📂 СЕКРЕТНЕ ДОСЬЄ
+</div>
+
+<div class="card" style="display:block">
+
+<div class="result" id="s1"></div>
+<div class="result" id="s2"></div>
+<div class="result" id="s3"></div>
+<div class="result" id="s4"></div>
+<div class="result" id="s5"></div>
+
+<button class="restart"
+onclick="location.reload()">
+Закрити досьє
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let progress = 0;
+
+const statuses = [
+"Пошук даних...",
+"Аналіз поведінки...",
+"Перевірка мемів...",
+"Оцінка рівня удачі...",
+"Пошук дивних звичок...",
+"Формування звіту..."
+];
+
+let index = 0;
+
+const interval = setInterval(function(){
+
+progress += 2;
+
+document.getElementById("progress").style.width =
+progress + "%";
+
+if(progress % 15 === 0 && index < statuses.length){
+document.getElementById("status").innerText =
+statuses[index];
+index++;
+}
+
+if(progress >= 100){
+
+clearInterval(interval);
+
+showResult();
+
+}
+
+},100);
+
+function random(min,max){
+return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function showResult(){
+
+document.getElementById("resultCard").style.display="block";
+
+document.getElementById("r1").innerText =
+"🎮 Годин у грі: " + random(500,9999);
+
+document.getElementById("r2").innerText =
+"☕ Кави випито: " + random(50,5000);
+
+document.getElementById("r3").innerText =
+"😴 Рівень сонливості: " + random(1,100) + "%";
+
+document.getElementById("r4").innerText =
+"🍀 Рівень удачі: " + random(1,100) + "%";
+
+const verdicts = [
+"Легенда району",
+"Майстер мемів",
+"Професійний прокрастинатор",
+"Таємний агент дивану",
+"Головний тестувальник холодильника"
+];
+
+document.getElementById("r5").innerText =
+"🏆 Статус: " +
+verdicts[random(0,verdicts.length-1)];
+
+}
+
+function showSecret(){
+
+document.getElementById("mainPage").style.display="none";
+document.getElementById("secretPage").style.display="block";
+
+document.getElementById("s1").innerText =
+"📅 Шанс прокинутися по першому будильнику: "
++ random(0,20) + "%";
+
+document.getElementById("s2").innerText =
+"🍕 Піци міг би з'їсти за день: "
++ random(1,12);
+
+document.getElementById("s3").innerText =
+"📱 Час скролу стрічки: "
++ random(2,15) + " годин";
+
+document.getElementById("s4").innerText =
+"🤣 Рівень мемності: "
++ random(80,999) + "%";
+
+document.getElementById("s5").innerText =
+"🚨 Висновок: потребує ще одну катку";
+
+}
+
+</script>
+
+</body>
+</html>
